@@ -1,0 +1,5 @@
+---
+- name: this is to install web servers
+  hosts: all
+  roles:
+   - apache_httpd

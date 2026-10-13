@@ -1,0 +1,40 @@
+#SPDX-License-Identifier: MIT-0
+---
+# handlers file for apache_httpd
+#
+- name: start httpd service
+  ansible.builtin.service:
+      name: httpd
+      state: started
+
+- name: restart httpd
+  ansible.builtin.service:
+      name: httpd
+      state: reloaded
+
+- name: start apache2 service
+  ansible.builtin.service:
+      name: apache2
+      state: started
+
+- name: restart apache2
+  ansible.builtin.service:
+       name: apache2
+       state: reloaded
+
+
+- name: create httpd html file
+  ansible.builtin.copy:
+      content: |
+        line1: this is httpd server running
+        line2: all good!
+      dest: /var/www/html/index.html
+      mode: '0644'
+
+- name: create apache2 html file
+  ansible.builtin.copy:
+      content: |
+        line1: this is apache2 server running
+        line2: all good!
+      dest: /var/www/html/index.html
+      mode: '0644'

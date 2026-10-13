@@ -1,0 +1,9 @@
+---
+- name: This installs httpd and starts the service
+  hosts: all
+  tasks:
+  - name: install httpd
+    ansible.builtin.dnf:
+         name: httpd
+         state: absent
+

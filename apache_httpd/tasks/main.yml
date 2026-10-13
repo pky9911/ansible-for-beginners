@@ -1,0 +1,42 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for apache_httpd
+
+- name: install httpd
+  ansible.builtin.dnf:
+      name: httpd
+      state: present
+  when: ansible_facts["os_family"]  == "RedHat"
+  notify:
+    - start httpd service
+    - create httpd html file
+
+- name: install apache
+  ansible.builtin.apt:
+      name: apache2
+      state: present
+  when:  ansible_facts["os_family"] == "Debian"
+  notify:
+    - start apache2 service
+    - create apache2 html file
+
+- name: Ensure the default httpd  port is {{httpd_port}}
+  ansible.builtin.lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^Listen '
+      insertafter: '^#Listen '
+      line: Listen 8081
+  when: ansible_facts["os_family"]  == "RedHat"
+  notify:
+    - restart httpd
+
+- name: Ensure the default Apache port is {{apache2_port}}
+  ansible.builtin.lineinfile:
+      path: /etc/apache2/ports.conf
+      regexp: '^Listen '
+      insertafter: '# /etc/apache2/sites-enabled/000-default.conf'
+      line: Listen 8080
+  when: ansible_facts["os_family"]  == "Debian"
+  notify:
+    - restart apache2
+

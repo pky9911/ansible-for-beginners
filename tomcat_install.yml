@@ -1,0 +1,34 @@
+---
+- name: this book deploys  the tomcat
+  hosts: rhel
+  tasks:
+  - name: install required java  package
+    ansible.builtin.dnf:
+      name: java
+      state: present
+
+  - name: create tomcat directory
+    ansible.builtin.file:
+      path: /opt/tomcat
+      state: directory
+  
+  - name: download tomcat package
+    ansible.builtin.get_url:
+      url: https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.60/bin/apache-tomcat-10.1.60.tar.gz
+      dest: /opt/tomcat
+  
+  - name: extract tomcat
+    ansible.builtin.unarchive:
+      src: /opt/tomcat/apache-tomcat-10.1.60.tar.gz
+      dest: /opt/tomcat
+      remote_src: yes
+
+  - name: give required pressions
+    ansible.builtin.file:
+      path: /opt/tomcat/apache-tomcat-10.1.60/bin/startup.sh 
+      mode: '0777'
+
+  - name: start tomcat services
+    ansible.builtin.shell:
+      cmd: /opt/tomcat/apache-tomcat-10.1.60/bin/startup.sh
+

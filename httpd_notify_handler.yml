@@ -1,0 +1,17 @@
+---
+- name: This installs httpd and starts the service
+  hosts: all
+  tasks:
+  - name: install httpd
+    ansible.builtin.dnf:
+         name: httpd
+         state: installed
+    notify: restart the httpd
+  
+  handlers:
+  - name: restart the httpd
+    ansible.builtin.service:
+        name: httpd
+        state: restarted
+
+

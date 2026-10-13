@@ -1,0 +1,18 @@
+---
+- name: this is to install web servers
+  hosts: all
+  tasks:
+  - name: install httpd
+    ansible.builtin.dnf:
+      name: httpd
+      state: present
+    when: ansible_facts["os_family"]  == "RedHat"
+    tags: install httpd
+
+  - name: install apache
+    ansible.builtin.apt:
+      name: apache2
+      state: present
+    when:  ansible_facts["os_family"] == "Debian"
+    
+

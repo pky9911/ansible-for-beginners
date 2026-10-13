@@ -1,0 +1,9 @@
+---
+- name: this creates user using variables
+  hosts: all
+  vars_files:
+    - user_file.yml
+  tasks:
+  - name: creating user {{user}}
+    ansible.builtin.user:
+      name: "{{user}}"

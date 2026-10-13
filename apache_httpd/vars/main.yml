@@ -1,0 +1,5 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for apache_httpd
+httpd_port: 8081
+apache2_port: 8080
